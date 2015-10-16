@@ -7,3 +7,14 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+  my_service.logger:
+    class: Symfony\Bridge\Monolog\Logger
+    arguments: [app]
+    calls:
+      - [pushHandler, [@my_service.logger_handler]]
+
+  my_service.logger_handler:
+    class:  Monolog\Handler\StreamHandler
+    arguments: [%kernel.logs_dir%/%kernel.environment%_my.log]
+

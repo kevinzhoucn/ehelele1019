@@ -12,6 +12,11 @@ class FrontController extends Controller
 {
     public function indexAction(Request $request)
     {
+      return $this->render('front/index.html.twig');
+    }
+
+    public function postsAction(Request $request)
+    {
       // replace this example code with whatever you need
       $posts = $this->getDoctrine()
         ->getRepository('AppBundle:Post')
