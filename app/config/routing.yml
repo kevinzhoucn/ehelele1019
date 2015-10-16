@@ -2,14 +2,19 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-root_url:
-  path: '/'
-  defaults: { _controller: AppBundle:Front:index }
+# root_url:
+#   path: '/'
+#   defaults: { _controller: AppBundle:Front:index }
 
-posts_path:
-  path: '/posts'
-  defaults: { _controller: AppBundle:Post:index }
+# posts_path:
+#   path: '/posts'
+#   defaults: { _controller: AppBundle:Post:index }
 
-show_post_path:
-  path: '/posts/show/{id}'
-  defaults: { _controller: AppBundle:Post:show }
+# show_post_path:
+#   path: '/posts/show/{id}'
+#   defaults: { _controller: AppBundle:Post:show }
+
+user_api_path:
+  path: '/api/user'
+  defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::userAction }
+  methods: [GET, POST]
