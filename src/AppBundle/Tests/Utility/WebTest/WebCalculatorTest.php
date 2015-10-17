@@ -57,7 +57,7 @@ class WebCalculatorTest extends \PHPUnit_Framework_TestCase
       $str02 = "{'data': {'price': 100}}";
       $result02 = WebCalculator::stringToJson($str02);
       // var_dump($result02);
-      var_dump($result02->{"data"}->{"price"});
+      // var_dump($result02->{"data"}->{"price"});
     }
 
     public function testJsonToString()
