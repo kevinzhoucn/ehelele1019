@@ -18,3 +18,7 @@ services:
     class:  Monolog\Handler\StreamHandler
     arguments: [%kernel.logs_dir%/%kernel.environment%_my.log]
 
+  # my_web_calculator:
+  #   class: AppBundle\Utility\WebTest\WebCalculator
+  #   arguments: ["@serializer"]
+

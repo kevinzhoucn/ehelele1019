@@ -43,7 +43,7 @@ class WebResponseTest extends RunTestMode {
     // $data = strtoupper($data);
 
     // return new Response("Content: " . $restClient);
-    // $response->send();
+    // $response->send();    
     return new Response("Content: " . $data );
   }
 }
