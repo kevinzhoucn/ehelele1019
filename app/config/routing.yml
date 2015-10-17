@@ -6,6 +6,9 @@ root_url:
   path: '/'
   defaults: { _controller: AppBundle:Front:index }
 
+show_path:
+  path: '/show'
+  defaults: { _controller: AppBundle:Front:show }
 # posts_path:
 #   path: '/posts'
 #   defaults: { _controller: AppBundle:Post:index }
