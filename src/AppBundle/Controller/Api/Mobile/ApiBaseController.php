@@ -22,7 +22,9 @@ class ApiBaseController extends Controller
       $logger->debug(date('Y-m-d H:i:s'));
 
       // return new Response("{ data: ". $data ." }");
-      $logger->debug($request);      
-      return new Response("{ data: ". $data . ", timestamp: " . $timestamp . ", accessToken: " . $accessToken ." }");
+      $logger->debug($request);
+      $result = sprintf('{ "data": "%s", "timestamp":"%s", "accessToken": "%s"}', $data , $timestamp, $accessToken);
+      // $result = sprintf("{ 'data': '%s', 'timestamp':'%s', 'accessToken': '%s'}", $data , $timestamp, $accessToken);
+      return new Response($result);
     }
 }
