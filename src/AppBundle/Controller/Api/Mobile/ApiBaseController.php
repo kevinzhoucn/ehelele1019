@@ -12,7 +12,6 @@ class ApiBaseController extends Controller
     public function userAction(Request $request)
     {
       // replace this example code with whatever you need
-
       return new Response("{ data: { value: 'empty' } }");
     }
 }

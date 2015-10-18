@@ -41,4 +41,9 @@ class FrontController extends Controller
         $em->persist($post);
         $em->flush();      
     }
+
+    public function testActon(Request $request)
+    {
+      return new Response("{ data: { value: 'empty' } }");
+    }
 }
