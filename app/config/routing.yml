@@ -2,10 +2,13 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-# root_url:
-#   path: '/'
-#   defaults: { _controller: AppBundle:Front:index }
+root_url:
+  path: '/'
+  defaults: { _controller: AppBundle:Front:index }
 
+show_path:
+  path: '/show'
+  defaults: { _controller: AppBundle:Front:show }
 # posts_path:
 #   path: '/posts'
 #   defaults: { _controller: AppBundle:Post:index }
@@ -17,7 +20,7 @@ app:
 user_api_path:
   path: '/api/user'
   defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::userAction }
-  methods: [GET, POST]
+  methods: [POST]
 
 web_test_index:
   path: /web/{name}
