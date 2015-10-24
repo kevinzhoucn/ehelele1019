@@ -8,12 +8,12 @@ class WebTestFactory {
   private function __construct() {
   }
 
-  static function getInstance( $name ) {
+  static function getInstance( $name, $restClient ) {
     switch ( $name ) {
       case ( 'response' ):
-        return new WebResponseTest();
+        return new WebResponseTest($restClient);
       default:
-        return new WebTestDefault();
+        return new WebTestDefault($restClient);
     }
   }
 }

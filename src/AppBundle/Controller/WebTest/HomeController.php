@@ -12,8 +12,10 @@ class HomeController extends Controller
   {
     $log = "log:";
 
-    $test = WebTestFactory::getInstance($name);
-    $log = $test->runTest();
+    $restClient = $this->container->get('ci.restclient');
+    $test = WebTestFactory::getInstance($name, $restClient);
+
+    $log = $test->runTest($restClient);
     return $this->render('web_test/index.html.twig', array( 'log' => CheckString::check( $log ) ) );
   }
 }
