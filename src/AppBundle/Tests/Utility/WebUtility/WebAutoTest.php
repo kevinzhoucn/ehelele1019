@@ -47,6 +47,11 @@ class WebAutoTest extends \PHPUnit_Framework_TestCase
 
       $url = $url . $params;
 
+      // $time = time();
+      // $date = date('Y-m-d H:i:s',$time);
+      // var_dump($time);
+      // var_dump($date);
+
       // print_r($url);
       // var_dump($url);
 

@@ -17,7 +17,24 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         // $this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
         $this->assertContains('Home page', $client->getResponse()->getContent());
-    } 
+    }
+
+    public function testServer()
+    {
+        $client = static::createClient();
+
+        // $url = 'http://xkt.jzcnw.com/organizationRedirect.do?action=viewCourseScheduleDetail&organizationId=8778';
+        $url = '/';
+        $crawler = $client->request('GET', $url);
+
+        // print_r("Nodename: " . $crawler->first()->text());
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        // $this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
+        // $content = $client->getResponse()->getContent();
+        // $this->assertContains('Home page', $content);
+        // print_r($content);
+    }
 
     public function testApiUserPost()
     {
@@ -36,17 +53,37 @@ class DefaultControllerTest extends WebTestCase
       $this->assertEquals($data_value, $response_data_value);
     }
 
-    public function testAbleSky()
+    public function testAbleSkyGet()
     {
       $url = WebAuto::webBuildURL();
-      var_dump($url);
+      // print_r($url);
 
-      $client02 = static::createClient();
-      $url = "https://www.baidu.com";
-      $crawler = $client02->request('GET', $url);
-      // $this->assertEquals(200, $client02->getResponse()->getStatusCode());
+      $client = static::createClient();
+      // $url = "http://www.baidu.com";
+      // $url = "www.baidu.com";
+      // $url = 'http://xkt.jzcnw.com/wap/schoolCourseClassify?orgId=8778';
+      $crawler = $client->request('GET', $url);
 
-      $response_content = $client02->getResponse()->getContent();
-      var_dump($response_content);
+      // $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+      // $response_content = $client->getResponse()->getContent();
+      // $response_content = $client02->getResponse();
+      // $this->assertContains('success', $client->getResponse()->getContent());
+      // var_dump($response_content);
+      // print_r($response_content);
+    }
+
+    public function testAbleSkyPost()
+    {
+      $url = WebAuto::webURL();
+      // print_r($url);
+
+      $client = static::createClient();
+      $payload = WebAuto::webBuildParamsArray();
+      // $payload = WebAuto::webBuildParams();
+
+      $crawler = $client->request('POST', $url, $payload);
+
+      // $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

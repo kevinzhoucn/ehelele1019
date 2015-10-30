@@ -5,10 +5,13 @@ namespace AppBundle\Utility\WebTest;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Utility\RunTestMode;
+use AppBundle\Utility\WebUtility\WebAuto;
 
 class WebResponseTest extends RunTestMode {
   function runTest() {
     $ret = $this->getTest();
+    $ret = $this->getTest02();
+    $ret = $this->getTest03();
     return $ret;
   }
 
@@ -44,6 +47,34 @@ class WebResponseTest extends RunTestMode {
 
     // return new Response("Content: " . $restClient);
     // $response->send();    
+    return new Response("Content: " . $data );
+  }
+
+  function getTest02() {
+    $restClient = $this->restClient;
+    
+    $payloads = WebAuto::webBuildParams();
+
+    $response = $restClient->post('http://www.ablesky.com/organizationCategory.do?action=listOrgInteriorCategoryTree', $payloads, array(CURLOPT_CONNECTTIMEOUT => 30));
+
+    $content = $response->getContent();
+    $data = $content;
+    return new Response("Content: " . $data );
+  }
+
+  function getTest03() {
+    $restClient = $this->restClient;
+    
+    $url = WebAuto::webBuildURL();
+    echo $url;
+    // $url = 'http://xkt.jzcnw.com/wap/schoolCourseClassify?orgId=8778';
+    // $url = 'http://xkt.jzcnw.com/organizationRedirect.do?action=viewCourseScheduleDetail&organizationId=8778';
+    // $url = 'http://xkt.jzcnw.com/org/8778/course?organizationId=8778&categoryId=209776&serviceType=totalCourse&chargeType=0#toCourseList';
+
+    $response = $restClient->get($url);
+
+    $content = $response->getContent();
+    $data = $content;
     return new Response("Content: " . $data );
   }
 }

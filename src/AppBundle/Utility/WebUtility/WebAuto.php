@@ -4,6 +4,9 @@ namespace AppBundle\Utility\WebUtility;
 
 class WebAuto
 {
+  const ABLE_SKY_KEY = "E1F244781A9F4F42BD7E6ADB2316B0FF";
+  const ABLE_SKY_URL = "http://www.ablesky.com/organizationCategory.do?action=listOrgInteriorCategoryTree";
+
   public static function makeUp()
   {
     $body = '
@@ -39,22 +42,52 @@ class WebAuto
     return $result;
   }
 
+  public static function webURL()
+  {
+    return WebAuto::ABLE_SKY_URL;
+  }
+
   public static function webBuildURL()
   {
+    return WebAuto::webURL() . '&' . WebAuto::webBuildParams();
+  }
+
+  public static function webBuildParams()
+  {
+    return http_build_query( WebAuto::webBuildParamsArray() );
+  }
+
+  public static function webBuildParamsArray()
+  {
     $orgParams = array();
-    $orgParams['organizationId'] = 8778 ;
-    $orgParams['optDate'] = 1446111630;
+    $orgParams['organizationId'] = "8778" ;
+    // $orgParams['optDate'] = WebAuto::getMillisecond();
+    $orgParams['optDate'] = time() * 1000;
+    print_r(getdate());
+    // $orgParams['optDate'] = microtime(true);
+    // $orgParams['optDate'] = "1446196830000";
+    // $access_key = WebAuto::ABLE_SKY_KEY;
+    $access_key = "E1F244781A9F4F42BD7E6ADB2316B0FF";
 
-    $orgInfoWithKey = "8778" . "|" . "1446111630" . "|" . "E1F244781A9F4F42BD7E6ADB2316B0FF";
+    $orgInfoWithKey = $orgParams['organizationId'] . "|" . $orgParams['optDate'] . "|" . $access_key;
+    // echo "</br>";
+    // echo $orgInfoWithKey;
     $accessToken = md5($orgInfoWithKey);
+    // echo "</br>";
+    // echo $accessToken;
+    // echo "</br>";
+    // "7abfa9530f226d55205f897dbcbcc60c"
     $orgParams['accessToken'] = $accessToken;
+    return $orgParams;
+  }
 
-    $url = "http://www.ablesky.com/organizationCategory.do?action=listOrgInteriorCategoryTree&";
-    $params = http_build_query($orgParams);
-    // print_r($params);
-
-    $url = $url . $params;
-    
-    return $url;
+  private static function getMillisecond() { 
+    // list($s1, $s2) = explode(' ', microtime()); 
+    // return (float)sprintf('%.0f', (floatval($s1) + floatval($s2)) * 1000); 
+    $time = explode ( " ", microtime () );  
+    $time = $time [1] . ($time [0] * 1000);  
+    $time2 = explode ( ".", $time );  
+    $time = $time2 [0];  
+    return $time;
   }
 }
