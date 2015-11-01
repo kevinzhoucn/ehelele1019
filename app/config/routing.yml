@@ -24,7 +24,7 @@ user_api_path:
 
 web_api_path:
   path: '/api/school/{name}'
-  defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::categoryActoin }
+  defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::schoolActoin }
   methods: [GET]
 
 web_test_index:

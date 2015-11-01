@@ -30,7 +30,7 @@ class ApiBaseController extends Controller
       return new Response($result);
     }
 
-    public function categoryActoin(Request $request, $name)
+    public function schoolActoin(Request $request, $name)
     {
       $restClient = $this->container->get('ci.restclient');
       $webApi = WebApiFactory::getInstance($name, $restClient);
