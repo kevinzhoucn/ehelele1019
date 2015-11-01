@@ -39,6 +39,7 @@ class WebJson
 
       $id = $value->{'id'};
       $categoryName = $value->{'categoryName'};
+      // $categoryName = utf8_encode($value->{'categoryName'});
       $children = $value->{'children'}->{'list'};
 
       $ret = $ret . "{ \"id\": $id, \"categoryName\": \"$categoryName\", \"children\": [";
@@ -46,6 +47,7 @@ class WebJson
       foreach ($children as $item) {
         $id = $item->{'id'};
         $categoryName = $item->{'categoryName'};
+        // $categoryName = utf8_encode($item->{'categoryName'});
         // $children = $item->{'children'}->{'list'};         
         $ret = $ret . "{ \"id\": $id, \"categoryName\": \"$categoryName\", \"children\": [] }, ";
       }
@@ -54,6 +56,23 @@ class WebJson
     }
     $ret = rtrim(trim($ret), ',') . ']}';
 
+    return $ret;
+  }
+
+  public static function parseCoursesJsonString( $result )
+  {
+    $result = WebJson::stringToJson($result);
+
+    $result = $result->{'result'}->{'list'};
+    $ret = '{ "result": [';
+
+    foreach ($result as $value) {
+      $id = $value->{'id'};
+      $title = $value->{'title'};
+      $ret = $ret . "{ \"id\": $id, \"title\": \"$title\" }, ";
+    }
+
+    $ret = rtrim(trim($ret), ',') . ']}';
     return $ret;
   }
 }
