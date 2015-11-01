@@ -22,6 +22,11 @@ user_api_path:
   defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::userAction }
   methods: [POST]
 
+web_api_path:
+  path: '/api/school/{name}'
+  defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::categoryActoin }
+  methods: [GET]
+
 web_test_index:
   path: /web/{name}
   defaults: {_controller: 'AppBundle\Controller\WebTest\HomeController::indexAction'}

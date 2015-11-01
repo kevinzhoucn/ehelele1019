@@ -6,6 +6,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Utility\RunTestMode;
 use AppBundle\Utility\WebUtility\WebAuto;
+use AppBundle\Utility\WebUtility\WebJson;
 
 class WebResponseTest extends RunTestMode {
   function runTest() {
@@ -66,7 +67,8 @@ class WebResponseTest extends RunTestMode {
     $restClient = $this->restClient;
     
     $url = WebAuto::webBuildURL();
-    echo $url;
+    // $url = "/";
+    // echo $url;
     // $url = 'http://xkt.jzcnw.com/wap/schoolCourseClassify?orgId=8778';
     // $url = 'http://xkt.jzcnw.com/organizationRedirect.do?action=viewCourseScheduleDetail&organizationId=8778';
     // $url = 'http://xkt.jzcnw.com/org/8778/course?organizationId=8778&categoryId=209776&serviceType=totalCourse&chargeType=0#toCourseList';
@@ -74,7 +76,14 @@ class WebResponseTest extends RunTestMode {
     $response = $restClient->get($url);
 
     $content = $response->getContent();
+    // $content_json = WebJson::stringToJson($content);
+
+    // $output01 = $content_json->{'result'}->{'list'}[0]->{'categoryName'} || "Failed";
+
     $data = $content;
-    return new Response("Content: " . $data );
+    return $content;
+    // $data = md5($content);
+    // $data = $content_json->{'success'};
+    // return new Response("Content: " . $data );
   }
 }

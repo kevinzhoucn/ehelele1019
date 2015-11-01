@@ -63,11 +63,11 @@ class WebAuto
     $orgParams['organizationId'] = "8778" ;
     // $orgParams['optDate'] = WebAuto::getMillisecond();
     $orgParams['optDate'] = time() * 1000;
-    print_r(getdate());
+    // print_r(getdate());
     // $orgParams['optDate'] = microtime(true);
     // $orgParams['optDate'] = "1446196830000";
-    // $access_key = WebAuto::ABLE_SKY_KEY;
-    $access_key = "E1F244781A9F4F42BD7E6ADB2316B0FF";
+    $access_key = WebAuto::ABLE_SKY_KEY;
+    // $access_key = "E1F244781A9F4F42BD7E6ADB2316B0FF";
 
     $orgInfoWithKey = $orgParams['organizationId'] . "|" . $orgParams['optDate'] . "|" . $access_key;
     // echo "</br>";

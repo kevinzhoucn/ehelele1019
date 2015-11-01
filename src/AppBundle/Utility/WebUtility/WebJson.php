@@ -9,7 +9,7 @@ class WebJson
     $ret = json_decode($str);
 
     if ($ret === null && json_last_error() !== JSON_ERROR_NONE) {
-      $error_message = sprintf("Failed to parse json string '%s', error: '%s'", $str , json_last_error_msg());
+      $error_message = sprintf("Failed to parse json string '%s', error: '%s'", $str , json_last_error());
       throw new \LogicException($error_message);
       $ret = '{ "result": 9, "message": ' . $error_message .'}';
     }
@@ -20,5 +20,40 @@ class WebJson
   public static function valueToJson( $json )
   {
     return json_encode($str, JSON_PRETTY_PRINT);
+  }
+
+  public static function parseJsonString( $result )
+  {
+    $result = WebJson::stringToJson($result);
+
+    $result = $result->{'result'}->{'list'};
+    $ret = '{ "result": [';
+
+    foreach ($result as $value) {
+      // if ( is_array($value) ) {
+      //   print_r($value);
+      // } else {          
+      //   // print "$key: $value";
+      //   print_r($value);
+      // }
+
+      $id = $value->{'id'};
+      $categoryName = $value->{'categoryName'};
+      $children = $value->{'children'}->{'list'};
+
+      $ret = $ret . "{ \"id\": $id, \"categoryName\": \"$categoryName\", \"children\": [";
+
+      foreach ($children as $item) {
+        $id = $item->{'id'};
+        $categoryName = $item->{'categoryName'};
+        // $children = $item->{'children'}->{'list'};         
+        $ret = $ret . "{ \"id\": $id, \"categoryName\": \"$categoryName\", \"children\": [] }, ";
+      }
+
+      $ret = rtrim(trim($ret), ',') . ']},';
+    }
+    $ret = rtrim(trim($ret), ',') . ']}';
+
+    return $ret;
   }
 }

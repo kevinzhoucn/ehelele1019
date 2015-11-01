@@ -55,35 +55,38 @@ class DefaultControllerTest extends WebTestCase
 
     public function testAbleSkyGet()
     {
-      $url = WebAuto::webBuildURL();
-      // print_r($url);
+      // $client = static::createClient();
+      // $url = '/web/response';
 
-      $client = static::createClient();
-      // $url = "http://www.baidu.com";
-      // $url = "www.baidu.com";
-      // $url = 'http://xkt.jzcnw.com/wap/schoolCourseClassify?orgId=8778';
-      $crawler = $client->request('GET', $url);
+      // $crawler = $client->request('GET', $url);
+      // $response_content = $client->getResponse()->getContent();
 
       // $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-      // $response_content = $client->getResponse()->getContent();
-      // $response_content = $client02->getResponse();
-      // $this->assertContains('success', $client->getResponse()->getContent());
-      // var_dump($response_content);
-      // print_r($response_content);
+      // $response_content = WebJson::parseJsonString($response_content);
+      // // $response_content = WebJson::stringToJson($response_content);
+      // // $response_content = json_decode($response_content);
+
+      // print_r("/n DefaultControllerTest: testAbleSky: response_content: " . $response_content);
     }
 
     public function testAbleSkyPost()
     {
-      $url = WebAuto::webURL();
-      // print_r($url);
+      // $url = WebAuto::webURL();
+      // // print_r($url);
 
-      $client = static::createClient();
-      $payload = WebAuto::webBuildParamsArray();
-      // $payload = WebAuto::webBuildParams();
+      // $client = static::createClient();
+      // $payload = WebAuto::webBuildParamsArray();
+      // // $payload = WebAuto::webBuildParams();
 
-      $crawler = $client->request('POST', $url, $payload);
+      // $crawler = $client->request('POST', $url, $payload);
 
-      // $this->assertEquals(200, $client->getResponse()->getStatusCode());
+      // // $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
+    public function testLocalFile()
+    {
+      // $content = file_get_contents('../../../../../../web/data.txt');
+      // print_r($content);
     }
 }
