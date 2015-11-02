@@ -23,8 +23,10 @@ user_api_path:
   methods: [POST]
 
 web_api_path:
-  path: '/api/school/{name}'
-  defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::categoryActoin }
+  path: '/api/school/categories/{id}'
+  defaults: { _controller: AppBundle\Controller\Api\Mobile\ApiBaseController::categoryActoin, id: 1 }
+  requirements:
+    page:  \d{1, 6}
   methods: [GET]
 
 web_test_index:

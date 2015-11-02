@@ -10,7 +10,7 @@ class WebApiFactory {
 
   static function getInstance( $name, $restClient ) {
     switch ( $name ) {
-      case ( 'category' ):
+      case ( 'categories' ):
         return new WebApiCategory($restClient);
       default:
         return new WebApiDefault($restClient);

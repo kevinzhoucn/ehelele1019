@@ -30,11 +30,18 @@ class ApiBaseController extends Controller
       return new Response($result);
     }
 
-    public function categoryActoin(Request $request, $name)
+    public function categoryActoin(Request $request, $id = null)
     {
       $restClient = $this->container->get('ci.restclient');
-      $webApi = WebApiFactory::getInstance($name, $restClient);
-      $result = $webApi->getResult();
+
+      $webApi = WebApiFactory::getInstance('categories', $restClient);
+      $result = "";
+
+      if( $id != 1 ) {
+        $result = $webApi->getCoursesByCategoryId($id);
+      } else {
+        $result = $webApi->getResult();
+      }
       return new Response(CheckString::check( $result ));
     }
 }

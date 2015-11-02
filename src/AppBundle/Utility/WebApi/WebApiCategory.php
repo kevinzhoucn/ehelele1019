@@ -14,12 +14,25 @@ class WebApiCategory extends WebApiMode {
   }
 
   function getResponse() {
-    $restClient = $this->restClient;    
-    $url = WebAuto::webBuildURL();    
-    $response = $restClient->get($url);
-    $content = $response->getContent();
-
+    $url = WebAuto::webBuildURL();
+    $content = $this->getWebResult( $url );
     $result = WebJson::parseJsonString($content);
     return $result;
+  }
+
+  public function getCoursesByCategoryId( $categoryId )
+  {
+    $url = WebAuto::webBuildGetCoursesURL( $categoryId );
+    $content = $this->getWebResult( $url );
+    $result = WebJson::parseCoursesJsonString($content);
+    return $result;
+  }
+
+  private function getWebResult( $url )
+  {
+    $restClient = $this->restClient;
+    $response = $restClient->get($url);
+    $content = $response->getContent();
+    return $content;
   }
 }
