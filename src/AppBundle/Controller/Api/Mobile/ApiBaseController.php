@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Utility\WebApi\WebApiFactory;
 use AppBundle\Utility\Check\CheckString;
+use AppBundle\Entity\Category;
+use AppBundle\Utility\Check\CheckDate;
 
 class ApiBaseController extends Controller
 {
@@ -30,18 +32,54 @@ class ApiBaseController extends Controller
       return new Response($result);
     }
 
-    public function categoryActoin(Request $request, $id = null)
+    public function categoryActoin(Request $request, $id)
     {
-      $restClient = $this->container->get('ci.restclient');
+      $result = $this->buildCategoryResponse( $id );
+      return new Response(CheckString::check( $result->getMobileJson() ));
+    }
 
-      $webApi = WebApiFactory::getInstance('categories', $restClient);
-      $result = "";
+    private function buildCategoryResponse( $categoryId = null )
+    {
+      $category = $this->findCategory( $categoryId );
 
-      if( $id != 1 ) {
-        $result = $webApi->getCoursesByCategoryId($id);
+      if (   !isset($category) || 
+           ( isset($category) && CheckDate::expired($category->getUpdated()->getTimestamp()) ) 
+         ) {
+        $restClient = $this->container->get('ci.restclient');
+
+        $webApi = WebApiFactory::getInstance('categories', $restClient);
+        $category;
+
+        if( $categoryId != 1 ) {
+          $category = $webApi->getCoursesByCategoryId($id);
+        } else {
+          $category = $webApi->getResult();
+        }
+
+        $this->saveCategory($category);
+      }    
+
+      return $category;
+    }
+
+    private function saveCategory( $category )
+    {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($category);
+      $em->flush();
+    }
+
+    private function findCategory( $categoryId = null )
+    {
+      $categoryRepo = $this->getDoctrine()
+                           ->getRepository('AppBundle:Category');
+      $category = null;
+      if( isset($categoryId) ){
+        $category = $categoryRepo->findOneBy(array('ablesky_id' => $categoryId));
       } else {
-        $result = $webApi->getResult();
+        $category = $categoryRepo->findOneBy(array('type' => 'root'));
       }
-      return new Response(CheckString::check( $result ));
+
+      return $category;
     }
 }
