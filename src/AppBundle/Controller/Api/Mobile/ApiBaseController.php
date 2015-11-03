@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Utility\WebApi\WebApiFactory;
 use AppBundle\Utility\Check\CheckString;
 use AppBundle\Entity\Category;
-use AppBundle\Utility\Check\CheckDate;
+use AppBundle\Utility\Check\CheckData;
 
 class ApiBaseController extends Controller
 {
@@ -40,23 +40,30 @@ class ApiBaseController extends Controller
 
     private function buildCategoryResponse( $categoryId = null )
     {
-      $category = $this->findCategory( $categoryId );
+      $category = $this->findCategory( $categoryId );      
+      var_dump($category->getUpdated());
 
       if (   !isset($category) || 
-           ( isset($category) && CheckDate::expired($category->getUpdated()->getTimestamp()) ) 
-         ) {
+           ( isset($category) && CheckData::dateExpired($category->getUpdated()->getTimestamp()) ) 
+         )
+      {
         $restClient = $this->container->get('ci.restclient');
-
         $webApi = WebApiFactory::getInstance('categories', $restClient);
-        $category;
+
+        $original_md5 = "";
+        if ( isset($category) ) $original_md5 = $category->getMd5();
+
+        // $category;
+        // echo $categoryId;
 
         if( $categoryId != 1 ) {
-          $category = $webApi->getCoursesByCategoryId($id);
+          $category = $webApi->getCoursesByCategoryId($categoryId);
         } else {
           $category = $webApi->getResult();
         }
 
-        $this->saveCategory($category);
+        $new_md5 = $category->getMd5();
+        if ( $original_md5 != $new_md5 ) $this->saveCategory($category);
       }    
 
       return $category;
@@ -75,9 +82,9 @@ class ApiBaseController extends Controller
                            ->getRepository('AppBundle:Category');
       $category = null;
       if( isset($categoryId) ){
-        $category = $categoryRepo->findOneBy(array('ablesky_id' => $categoryId));
+        $category = $categoryRepo->findOneBy(array('ablesky_id' => $categoryId), array('updated' => 'DESC'));
       } else {
-        $category = $categoryRepo->findOneBy(array('type' => 'root'));
+        $category = $categoryRepo->findOneBy(array('type' => 'root'), array('updated' => 'DESC'));
       }
 
       return $category;

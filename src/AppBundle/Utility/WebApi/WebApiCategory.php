@@ -46,6 +46,7 @@ class WebApiCategory extends WebApiMode {
     $category->setMobileJson($mobileContent);
     if ( isset($categoryId) ){
       $category->setAbleskyId($categoryId);
+      $category->setType('item');
     } else {
       $category->setAbleskyId(1);
       $category->setType('root');
